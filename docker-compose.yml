@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  php:
+    platform: linux/x86_64
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - .:/var/www/app:cached
+      - ./etc/php/php.ini:/usr/local/etc/php/php.ini
+      - ./etc/php/zz-www.conf:/usr/local/etc/php-fpm.d/zz-www.conf
+      - uds:/var/run
+    working_dir: /var/www/app
+
+  nginx:
+    image: nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/app:cached
+      - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - uds:/var/run
+    depends_on:
+      - php
+
+volumes:
+  uds:
