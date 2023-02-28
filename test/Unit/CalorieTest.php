@@ -84,11 +84,9 @@ class CalorieTest extends TestCase
             $food2Calorie
            ];
 
-        $calorie = new Calorie();
-
         // 納豆と白米のカロリーがそれぞれ17になるように設定して、
         // 34で計算されかつint型であることを確認する
-        $this->assertSame($calorie->getTotal($nattoRice), 34);
+        $this->assertSame(Calorie::getTotal($nattoRice), 34);
     }
 
     /**
@@ -102,9 +100,7 @@ class CalorieTest extends TestCase
         // 空の配列を設定
         $nattoRice = [];
 
-        $calorie = new Calorie();
-
         // falseが返ることを確認する
-        $this->assertFalse($calorie->getTotal($nattoRice));
+        $this->assertFalse(Calorie::getTotal($nattoRice));
     }
 }

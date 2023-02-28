@@ -31,8 +31,12 @@ class Pfc
      */
     protected function calcProteinCalorie(): int
     {
-        $protein = $this->food->getProtein() * 4;
-        return (int) $protein;
+        // タンパク質の摂取グラムを小数第二位で四捨五入
+        $protein = round($this->food->getProtein(), 1);
+        $calorie = $protein * 4;
+
+        // 算出したカロリーを整数にする
+        return (int) $calorie;
     }
 
     /**
@@ -42,8 +46,12 @@ class Pfc
      */
     protected function calcFatCalorie(): int
     {
-        $fat =  $this->food->getFat() * 9;
-        return (int) $fat;
+        // 脂質の摂取グラムを小数第二位で四捨五入
+        $fat = round($this->food->getFat(), 1);
+        $calorie = $fat * 9;
+
+        // 算出したカロリーを整数にする
+        return (int) $calorie;
     }
 
     /**
@@ -53,17 +61,22 @@ class Pfc
      */
     protected function calcCarbohydrateCalorie(): int
     {
-        $cabohydrate = $this->food->getCarbohydrate() * 4;
-        return (int) $cabohydrate;
+        // 炭水化物の摂取グラムを小数第二位で四捨五入
+        $cabohydrate = round($this->food->getCarbohydrate(), 1);
+        $calorie = $cabohydrate * 4;
+
+        // 算出したカロリーを整数にする
+        return (int) $calorie;
     }
 
     /**
-     * 三大栄養素から食品の総カロリーを計算する
+     * 三大栄養素から食品のカロリーを計算する
      *
      * @return int $calorie
      */
     public function calcCalorie(): int
     {
+        // タンパク質、脂質、炭水化物のそれぞれのカロリーを求める
         $proteinCalorie = $this->calcProteinCalorie();
         $fatCalorie = $this->calcFatCalorie();
         $carbohydrateCalorie = $this->calcCarbohydrateCalorie();
@@ -74,6 +87,7 @@ class Pfc
             $carbohydrateCalorie
         ];
 
+        // 三大栄養素で求めたカロリーから食品のカロリーを算出する
         $calorie = Calorie::getTotal($nutrients);
 
         return (int) $calorie;

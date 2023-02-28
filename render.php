@@ -12,11 +12,11 @@ use Libs\Natto;
 use Libs\Calorie;
 
 try {
-    // 白米のカロリーを計算する
+    // 白米の三大栄養素からカロリーを計算する
     $whiteRice = (new Pfc(new WhiteRice()))
             ->calcCalorie();
 
-    // 納豆のカロリーを計算する
+    // 納豆の三大栄養素からカロリーを計算する
     $natto = (new Pfc(new Natto()))
             ->calcCalorie();
 
