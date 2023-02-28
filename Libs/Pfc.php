@@ -2,6 +2,8 @@
 
 namespace Libs;
 
+use Libs\Calorie;
+
 /**
  * 三大栄養素から食品のカロリーを計算するClass
  */
@@ -66,11 +68,13 @@ class Pfc
         $fatCalorie = $this->calcFatCalorie();
         $carbohydrateCalorie = $this->calcCarbohydrateCalorie();
 
-        $calorie = array_sum([
+        $nutrients = [
             $proteinCalorie,
             $fatCalorie,
             $carbohydrateCalorie
-                ]);
+        ];
+
+        $calorie = Calorie::getTotal($nutrients);
 
         return (int) $calorie;
     }

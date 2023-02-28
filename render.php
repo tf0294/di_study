@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Libs/Food.php';
 require_once 'Libs/Pfc.php';
 require_once 'Libs/WhiteRice.php';
 require_once 'Libs/Natto.php';
@@ -26,8 +27,7 @@ try {
     ];
 
     // 納豆ご飯のカロリーを求める
-    $total = (new Calorie())
-            ->getTotal($nattoRice);
+    $total = Calorie::getTotal($nattoRice);
 
     if (!$total) {
         throw new Exception('calorie calc failed.');

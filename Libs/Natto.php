@@ -2,8 +2,6 @@
 
 namespace Libs;
 
-require_once 'Libs/Food.php';
-
 use Libs\FoodInterface;
 
 /**

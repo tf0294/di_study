@@ -3,7 +3,7 @@
 namespace Libs;
 
 /**
- * 食品毎のカロリーから総カロリーを計算する
+ * カロリーに関するClass
  */
 class Calorie
 {
@@ -14,7 +14,7 @@ class Calorie
      * @param array $calories
      * @return int|false $allCalorie
      */
-    public function getTotal(array $calories)
+    public static function getTotal(array $calories)
     {
         if (is_array($calories) && empty($calories)) {
             return false;
