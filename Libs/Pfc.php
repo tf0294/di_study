@@ -35,8 +35,8 @@ class Pfc
         $protein = round($this->food->getProtein(), 1);
         $calorie = $protein * 4;
 
-        // 算出したカロリーを整数にする
-        return (int) $calorie;
+        // 算出したカロリーを小数点第一位で四捨五入する
+        return (int) round($calorie);
     }
 
     /**
@@ -50,8 +50,8 @@ class Pfc
         $fat = round($this->food->getFat(), 1);
         $calorie = $fat * 9;
 
-        // 算出したカロリーを整数にする
-        return (int) $calorie;
+        // 算出したカロリーを小数点第一位で四捨五入する
+        return (int) round($calorie);
     }
 
     /**
@@ -65,8 +65,8 @@ class Pfc
         $cabohydrate = round($this->food->getCarbohydrate(), 1);
         $calorie = $cabohydrate * 4;
 
-        // 算出したカロリーを整数にする
-        return (int) $calorie;
+        // 算出したカロリーを小数点第一位で四捨五入する
+        return (int) round($calorie);
     }
 
     /**
@@ -87,7 +87,7 @@ class Pfc
             $carbohydrateCalorie
         ];
 
-        // 三大栄養素で求めたカロリーから食品のカロリーを算出する
+        // 三大栄養素毎に求めたカロリーから食品のカロリーを算出する
         $calorie = Calorie::getTotal($nutrients);
 
         return (int) $calorie;

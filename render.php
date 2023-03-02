@@ -11,6 +11,10 @@ use Libs\WhiteRice;
 use Libs\Natto;
 use Libs\Calorie;
 
+/**
+ * 納豆ご飯の総カロリーを算出
+ */
+
 try {
     // 白米の三大栄養素からカロリーを計算する
     $whiteRice = (new Pfc(new WhiteRice()))

@@ -14,93 +14,59 @@ use Libs\FoodInterface;
 /**
  * test calorie
  *
- * 複数の食品の組み合わせから総カロリーが計算されることを確認する
- * 2つの食品、食品１と食品２のそれぞれのモックを作成して、総カロリーが計算されるかを
- * テストする
+ * 配列で渡された値が足し算で計算され、結果が正しいことを確認しています
+ * マイナスや小数点なども正しく計算されることを確認しています
+ * dataProviderで整数や小数点などのパターンデータを作成し、それぞれが正しく計算されることを確認しています
+ * dataProviderを使用することでどのデータでエラーになったかもわかるようにしています
  */
 class CalorieTest extends TestCase
 {
-    protected function setUp(): void
+    /**
+     * test getTotal
+     * カロリーの計算のテスト
+     *
+     * @test
+     * @dataProvider provideTestData
+     * @param array $foodArray
+     * @param int|float $total
+     */
+    public function testGetTotal(array $foodArray, int|float $total): void
     {
-        // 食品1Mockを生成
-        $this->food1Mock = $this->createMock(FoodInterface::class);
 
-        // 食品2Mockを生成
-        $this->food2Mock = $this->createMock(FoodInterface::class);
+        $this->assertSame(Calorie::getTotal($foodArray), $total);
     }
 
     /**
-     * test getTotal
+     * provide test data
+     * 計算する用の配列データ
+     *
+     * @return array
      */
-    public function testGetTotal(): void
+    public function provideTestData()
     {
-        /**
-         * 食品1Mockを作成して、カロリーが17になるように設定する
-         */
-        /// たんぱく質のカロリーが4になるように設定する
-        $this->food1Mock->expects($this->any(0))
-                ->method('getProtein')
-                ->will($this->returnValue(1));
-
-        // 脂質のカロリーが9になるように設定する
-        $this->food1Mock->expects($this->any(1))
-                ->method('getFat')
-                ->will($this->returnValue(1));
-
-        // 炭水化物のカロリーが4になるように設定する
-        $this->food1Mock->expects($this->any(2))
-                ->method('getCarbohydrate')
-                ->will($this->returnValue(1));
-
-        // 作成した食品1Mockをコンストラクター・インジェクション
-        $food1Calorie = (new Pfc($this->food1Mock))
-                ->calcCalorie();
-
-        /**
-         * 食品2Mockを作成して、カロリーが17になるように設定する
-         */
-        /// たんぱく質のカロリーが4になるように設定する
-        $this->food2Mock->expects($this->any(0))
-                ->method('getProtein')
-                ->will($this->returnValue(1));
-
-        // 脂質のカロリーが9になるように設定する
-        $this->food2Mock->expects($this->any(1))
-                ->method('getFat')
-                ->will($this->returnValue(1));
-
-        // 炭水化物のカロリーが4になるように設定する
-        $this->food2Mock->expects($this->any(2))
-                ->method('getCarbohydrate')
-                ->will($this->returnValue(1));
-
-        // 作成した食品2Mockをコンストラクター・インジェクション
-        $food2Calorie = (new Pfc($this->food2Mock))
-                ->calcCalorie();
-
-        // 食品1と食品2のカロリーの配列
-        $nattoRice = [
-            $food1Calorie,
-            $food2Calorie
-           ];
-
-        // 納豆と白米のカロリーがそれぞれ17になるように設定して、
-        // 34で計算されかつint型であることを確認する
-        $this->assertSame(Calorie::getTotal($nattoRice), 34);
+        return [
+            [[1, 1, 1], 3], // 三大栄養素を想定
+            [[1, 2, 3, 4, 5, 6], 21], // 配列の要素が多い場合
+            [[1.5, 2, 3.5, 4], 11.0], // 小数点を含む場合
+            [[-1, 3, 2.5, 9, 0, 3.3333], 16.8333], // マイナスや小数点を含む場合
+            [[5], 5], // 配列の要素が1つの場合
+        ];
     }
 
     /**
      * test getTotal with error
      * 異常系のテスト
      *
-     * 空の配列を設定し、Falseが返されることを確認する
+     * 空の配列の場合、falseが返されることを確認する
+     *
+     * @test
      */
     public function testGetTotalWithError(): void
     {
         // 空の配列を設定
-        $nattoRice = [];
+        $foodArray = [];
 
         // falseが返ることを確認する
-        $this->assertFalse(Calorie::getTotal($nattoRice));
+        $this->assertFalse(Calorie::getTotal($foodArray));
     }
 }

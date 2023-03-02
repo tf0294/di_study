@@ -9,10 +9,10 @@ class Calorie
 {
     /**
      * getTotal
-     * 総カロリーを計算して返す
+     * 総カロリーを計算する
      *
      * @param array $calories
-     * @return int|false $allCalorie
+     * @return int|bool $allCalorie
      */
     public static function getTotal(array $calories)
     {
